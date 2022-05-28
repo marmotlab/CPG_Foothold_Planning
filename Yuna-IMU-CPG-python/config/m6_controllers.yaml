@@ -1,0 +1,82 @@
+m6:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 300  #300?
+
+  # Position Controllers ---------------------------------------
+  base1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base1
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder1
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow1_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow1
+    pid: {p: 800, i: 0, d: 7.0}
+  base2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base2
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder2
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow2_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow2
+    pid: {p: 800, i: 0, d: 7.0}
+  base3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base3
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder3
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow3_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow3
+    pid: {p: 800, i: 0, d: 7.0}
+  base4_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base4
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder4_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder4
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow4_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow4
+    pid: {p: 800, i: 0, d: 7.0}
+  base5_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base5
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder5_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder5
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow5_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow5
+    pid: {p: 800, i: 0, d: 7.0}
+  base6_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: base6
+    pid: {p: 800, i: 0, d: 7.0}
+  shoulder6_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: shoulder6
+    pid: {p: 800, i: 0, d: 7.0}
+  elbow6_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: elbow6
+    pid: {p: 800, i: 0, d: 7.0}
+
+
+

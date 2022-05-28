@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <!--Launch World-->
+  <include file="$(find xMonsterCPG)/launch/quickWorld.launch"/>
+  <!--<include file="$(find aws_robomaker_small_house_world)/launch/small_house.launch">-->
+
+  <!-- just to show the robot in the gazebo, no controller involved -->
+  <arg name="model" default="$(find xMonsterCPG)/urdf/m6.urdf.xacro" />
+  <param name="robot_description" command="rosrun xacro xacro $(arg model)" />
+  <node
+    name="spawn_model"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-x 0 -y 0 -z 1 -Y 0 -urdf -model robot -param robot_description"
+    output="screen" />
+
+  <!-- run the state publisher node by default -->
+
+  <!-- <node pkg="joint_state_publisher" type="joint_state_publisher" name="rob_st_pub" >
+    </node> -->
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="rob_st_pub" >
+      <remap from="/joint_states" to="/m6/joint_states" />
+    </node>
+
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find xMonsterCPG)/config/m6_controllers.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="/m6" args="
+  base1_position_controller shoulder1_position_controller elbow1_position_controller base2_position_controller shoulder2_position_controller
+  elbow2_position_controller base3_position_controller shoulder3_position_controller elbow3_position_controller base4_position_controller
+  shoulder4_position_controller elbow4_position_controller base5_position_controller shoulder5_position_controller elbow5_position_controller
+  base6_position_controller shoulder6_position_controller elbow6_position_controller joint_state_controller"/>
+
+  <!--
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/m6/joint_states" />
+  </node> -->
+ <node name= "control_cpg" pkg="xMonsterCPG" output="screen" type="laptop.py"/>
+ <node name= "odom_publisher" pkg="xMonsterCPG" output="screen" type="odom_ground_truth_publish.py"/>
+
+  <node pkg="tf" type="static_transform_publisher"  name="camera_color_to_color_out" args="0 0 0 0 0 0 realsense_d435_camera_color_optical_frame realsense_d435_cameracolor 100" />
+
+  <node pkg="tf" type="static_transform_publisher"  name="camera_depth_to_depth_out" args="0 0 0 0 0 0 realsense_d435_camera_depth_optical_frame realsense_d435_cameradepth 100" />
+
+
+    <node pkg="elevation_mapping_demos" type="tf_to_pose_publisher.py" name="waffle_pose_publisher">
+    <param name="from_frame" type="string" value="map" />
+    <param name="to_frame"   type="string" value="base_link" />
+  </node>
+
+  <!-- Launch elevation mapping node. -->
+  <node pkg="elevation_mapping" type="elevation_mapping" name="elevation_mapping" output="screen">
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/robots/waffle_robot.yaml" />
+    <rosparam command="load" file="$(find elevation_mapping)/config/sensor_processors/realsense_d435.yaml" />
+    <rosparam command="load" file="$(find elevation_mapping_demos)/config/postprocessing/postprocessor_pipeline.yaml" />
+  </node>
+  <node name= "transformed_elevation_map" pkg="grid_map_demos" output="screen" type="gridmap_subscriber"/>
+  <node name= "costmap_generator" pkg="xMonsterCPG" output="screen" type="cost_map.py"/>
+  <node name= "foothold_predict" pkg="xMonsterCPG" output="screen" type="foothold_prediction.py"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find elevation_mapping_demos)/rviz/elevation_map_visualization_with_foothold.rviz" />
+</launch>

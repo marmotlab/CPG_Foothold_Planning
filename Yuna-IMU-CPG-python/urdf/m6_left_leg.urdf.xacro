@@ -1,0 +1,382 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="m6_left_leg" params="prefix mod1 mod2 mod3 base_x base_y base_ang">
+    <link
+      name="${mod1}__INPUT_INTERFACE">
+      <inertial>
+        <origin
+          xyz="0.015005 0.001775 0.015011"
+          rpy="0 0 0" />
+        <mass
+          value="1.2804" />
+        <inertia
+          ixx="0.000533112547871023"
+          ixy="8.52907138161489E-05"
+          ixz="6.73224445510202E-07"
+          iyy="0.000959826064510336"
+          iyz="8.0840859065961E-07"
+          izz="0.00130175668733721" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0.015"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/M6_base_motor.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.79216 0.81961 0.93333 1" />
+        </material>
+      </visual>
+      <collision>
+        <!--origin
+          xyz="0 0 0.015"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/boxed_meshes/base_motor.STL" />
+        </geometry-->
+        <origin 
+          xyz="0.019940 0.001750 0.015525"
+          rpy="0 0 0" />
+        <geometry>
+          <box size= "0.106400 0.069500 0.031050" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="leg${prefix}__OUTPUT_INTERFACE"
+      type="fixed">
+      <origin
+        xyz="${base_x} ${base_y} 0"
+        rpy="0 0 ${pi+base_ang}" />
+      <parent
+        link="base_link" />
+      <child
+        link="${mod1}__INPUT_INTERFACE" />
+      <axis
+        xyz="0 0 1" />
+      <limit
+        effort="0"
+        velocity="0" />
+    </joint>
+    <link
+      name="${mod2}__INPUT_INTERFACE">
+      <inertial>
+        <origin
+          xyz="-0.012554 -0.0090693 0.0503697"
+          rpy="0 0 0" />
+        <mass
+          value="1.4679" />
+        <inertia
+          ixx="0.00085304"
+          ixy="-4.463E-05"
+          ixz="4.178E-05"
+          iyy="0.0016596"
+          iyz="4.4E-06"
+          izz="0.00113592" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/M6_left_link1_red.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.75294 0.75294 0.75294 1" />
+        </material>
+      </visual>
+      <collision>
+        <!--origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/boxed_meshes/left_link1_red.STL" />
+        </geometry-->
+        <origin 
+          xyz="-0.019070 -0.014470 0.052500"
+          rpy="0 0 0" />
+        <geometry>
+          <box size= "0.108140 0.04500 0.104000" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="${mod1}"
+      type="revolute">
+      <origin
+        xyz="0 0 0.03105"
+        rpy="0 0 ${pi}" />
+      <parent
+        link="${mod1}__INPUT_INTERFACE" />
+      <child
+        link="${mod2}__INPUT_INTERFACE" />
+      <axis
+        xyz="0 0 1" />
+      <dynamics
+        damping=".1"
+        friction="0.2"/>
+      <limit
+        effort="40.0"
+        lower="${-pi/2}"
+        upper="${pi/2}"
+        velocity="2.208932"/>
+    </joint>
+    <transmission name="${mod1}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${mod1}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${mod1}_motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>300</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+    <link
+      name="${mod3}__INPUT_INTERFACE">
+      <inertial>
+        <origin
+          xyz="0.27885723 0.00143862 -0.00919708"
+          rpy="0 0 0" />
+        <mass
+          value="1.58985" />
+        <inertia
+          ixx="0.00087813"
+          ixy="-2.653E-05"
+          ixz="-0.00101493"
+          iyy="0.01121522"
+          iyz="-1.36E-05"
+          izz="0.01137087" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/M6_link2_red.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.75294 0.75294 0.75294 1" />
+        </material>
+      </visual>
+      <collision>
+        <!--origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/boxed_meshes/link2_red.STL" />
+        </geometry-->
+        <origin 
+          xyz="0.005750 0.0 0.018750"
+          rpy="0 0 0" />
+        <geometry>
+          <box size= "0.05950 0.04800 0.037500" />
+        </geometry>
+      </collision>
+      <collision>
+        <origin 
+          xyz="0.159500 0.0 0.02"
+          rpy="0 ${pi/2} 0" />
+          <geometry>
+            <cylinder radius="0.015811" length="0.246"/>
+          </geometry>
+      </collision>
+      <collision>
+        <origin
+          xyz= "0.317750 0.0 0.01875"
+          rpy= "0 0 0" />
+        <geometry>
+          <box size="0.06850 0.06500 0.037500"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin 
+          xyz="0.299560 0.001750 -0.015520" 
+          rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size= "0.106400 0.069500 0.030050" />
+        </geometry>
+      </collision>
+    </link>
+    <joint
+      name="${mod2}"
+      type="revolute">
+      <origin
+        xyz="0 0.00855 0.055"
+        rpy="${-pi/2} 0 0" />
+      <parent
+        link="${mod2}__INPUT_INTERFACE" />
+      <child
+        link="${mod3}__INPUT_INTERFACE" />
+      <axis
+        xyz="0 0 1" />
+      <dynamics
+        damping=".1"
+        friction="0.2"/>
+      <limit
+      effort="40.0"
+      lower="${-pi/2}"
+      upper="${pi/2}"
+      velocity="2.208932"/>
+    </joint>
+    <transmission name="${mod2}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${mod2}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${mod2}_motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>300</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+
+
+    <link
+      name="leg${prefix}__LAST_LINK">
+      <inertial>
+        <origin
+          xyz="0.12121923 0 0.01723596"
+          rpy="0 0 0" />
+        <mass
+          value="0.229433" />
+        <inertia
+          ixx="7.471E-05"
+          ixy="0"
+          ixz="7.798E-05"
+          iyy="0.00331684"
+          iyz="0"
+          izz="0.0033262" />
+      </inertial>
+      <visual>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/M6_link3_red.STL" />
+        </geometry>
+        <material
+          name="">
+          <color
+            rgba="0.75294 0.75294 0.75294 1" />
+        </material>
+      </visual>
+      <!--collision>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://xMonsterCPG/meshes/boxed_meshes/link3_red.STL" />
+        </geometry>
+      </collision-->
+      <collision>
+        <origin 
+          xyz="0.00575 0.0 0.0185"
+          rpy="0 0 0" />
+        
+        <geometry>
+          <box size= "0.05850 0.04800 0.03650" />
+        </geometry>
+      </collision>
+      <collision>
+        <origin 
+          xyz="0.15125 0.000 0.020" 
+          rpy="0.0 ${pi/2} 0.0"/>
+        <geometry>
+          <cylinder radius="0.015811" length="0.230500"/>
+        </geometry>
+      </collision>
+      <collision>
+        <origin 
+          xyz="0.28950 0.00 0.02" 
+          rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size= "0.045000 0.047030 0.047030" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint
+      name="${mod3}"
+      type="revolute">
+      <origin
+        xyz="0.3195 0 -0.03105"
+        rpy="3.1415 0 0" />
+      <parent
+        link="${mod3}__INPUT_INTERFACE" />
+      <child
+        link="leg${prefix}__LAST_LINK" />
+      <axis
+        xyz="0 0 1" />
+      <dynamics
+        damping=".1"
+        friction="0.9"/>
+      <limit
+        effort="40.0"
+        lower="${-pi}"
+        upper="${pi}"
+        velocity="2.208932"/>
+    </joint>
+    <transmission name="${mod3}_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${mod3}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${mod3}_motor">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>300</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <link
+      name="leg${prefix}__FOOT">
+      <inertial>
+        <origin
+          xyz="0 0 0"
+          rpy="0 0 0" />
+        <mass
+          value="0" />
+        <inertia
+          ixx="0"
+          ixy="0"
+          ixz="0"
+          iyy="0"
+          iyz="0"
+          izz="0" />
+      </inertial>
+    </link>
+    <joint
+      name="leg${prefix}__FOOT_INTERFACE"
+      type="fixed">
+      <origin
+        xyz="0.31 0 0.02"
+        rpy="0 0 0" />
+      <parent
+        link="leg${prefix}__LAST_LINK" />
+      <child
+        link="leg${prefix}__FOOT" />
+      <axis
+        xyz="0 0 1" />
+      <limit
+        effort="0"
+        velocity="0" />
+    </joint>
+
+  </xacro:macro>
+</robot>
