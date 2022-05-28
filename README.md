@@ -35,6 +35,7 @@ Please follow the instruction in https://github.com/ANYbotics/elevation_mapping 
 
 In order to run the CPG code and Visualization tool: **roslaunch xMonsterCPG m6_gazebo_cpg.launch**.
 
+To run the foothold correction node : **rosrun xMonsterCPG foothold_correction.py**.
 
 ## Authors
 
