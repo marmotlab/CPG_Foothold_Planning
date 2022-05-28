@@ -11,7 +11,7 @@ versions (2.x and 3.x) installed on the same system without problems.
 
 
 ## Python Packages:
--Numpy
+-Numpy==1.19.5
 
 -hebi-py==1.0.0
 
