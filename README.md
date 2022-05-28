@@ -29,9 +29,11 @@ Install ROS Melodic (Desktop-Full Install), with all its libraries and tools. Cr
 
 Clone the Yuna package into the ROS workspace inside the src folder and build the workspace. 
 
-To use the camera plugin, we have used this repo: https://github.com/SyrianSpock/realsense_gazebo_plugin, and cloned it in our workspace inside the src folder.  
+To use the camera plugin, we used this repo: https://github.com/SyrianSpock/realsense_gazebo_plugin, and cloned it in our workspace inside the src folder.  
 
-In order to run the CPG code and Visualiztion tool: **roslaunch xMonsterCPG m6_gazebo_cpg.launch**.
+Please follow the instruction in https://github.com/ANYbotics/elevation_mapping to build the elevation map package
+
+In order to run the CPG code and Visualization tool: **roslaunch xMonsterCPG m6_gazebo_cpg.launch**.
 
 
 ## Authors
