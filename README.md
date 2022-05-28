@@ -34,6 +34,10 @@ To use the camera plugin, we have used this repo: https://github.com/SyrianSpock
 In order to run the CPG code and Visualiztion tool: **roslaunch xMonsterCPG m6_gazebo_cpg.launch**.
 
 
+## Authors
 
+[Ge Sun](sunge@u.nus.edu)
+
+[Guillaume Sartoretti](guillaume.sartoretti@gmail.com)
 
 
